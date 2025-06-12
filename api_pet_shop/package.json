@@ -1,0 +1,26 @@
+{
+  "name": "api_pet_shop",
+  "version": "1.0.0",
+  "description": "Projeto feito para a disciplina de banco de dados feito para fins educacionais afim de obter acesso a um banco de dados e interagirmos com ele a princípio conectando ao banco e logo aós para realizar operações como Adicionar, Atualizar e Deletar cadastros.",
+  "keywords": [
+    "databases",
+    "crud",
+    "introduction databases",
+    "classroom bd",
+    "databases",
+    "db"
+  ],
+  "license": "ISC",
+  "author": "Esley e Natanael",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql": "^2.18.1"
+  }
+}
