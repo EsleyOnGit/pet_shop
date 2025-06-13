@@ -1,0 +1,13 @@
+comandos para subir os arquivos
+cd /caminho/para/sua/pasta
+git init
+git add .
+git remote add origin https://github.com/seu-usuario/nome-do-repositorio.git
+git commit -m "Adicionando arquivos do projeto pet_shop"
+git branch
+Se sua branch principal se chama main:
+git push -u origin main
+Se der erro de branch (master vs main)
+git branch -M main
+Ou, se sua branch é master
+git push -u origin master
