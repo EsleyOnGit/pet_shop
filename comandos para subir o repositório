@@ -13,7 +13,9 @@ Ou, se sua branch é master
 git push -u origin master
 
 -------------------------------//-------------------------------
-recomendações do chatgpt
+validações com express-validator ou Joi
+------------------------------------------------------------------
+recomendações do chatgpt com express-validator
 Criar ou atualizar o userController.js
 
 import { validationResult } from "express-validator";
