@@ -1,16 +1,26 @@
 import express from "express";
 import cors from "cors";
 
-import bd from "./src/db/dbconfig.js";
+import router from "./src/routes/Routes.js";
 
 const server = express();
 
 server.use(express.json());
 server.use(cors());
 
-server.get('/usuarios', );
-server.get('/pets', );
-server.get('/usuarios', );
+server.use('/', router);
+
+// server.get("/", async (req, res)=>{
+//     try {
+//         const sql = "select * from cliente"
+//         db.query(sql, (err, resp)=>{
+//             return res.json(resp).status(200)
+//         })
+//     } catch (error) {
+//         console.log("erro no servidor " + error);
+//         return res.json({message: "Erro no servidor tente novamente mais tarde"}).status(500)
+//     }
+// });
 
 /*
 app.post('/endereco', async (req, res)=>{
