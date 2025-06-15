@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 
 const Pets = () =>{
-    const [pets, setPets] = useState('');
+    const [pets, setPets] = useState([]);
 
-    useEffect(async ()=>{
-        const response = await api.get('/pets');
-        setPets(response);
-    },[]);
+    useEffect(()=> {
+        const getData = async ()=>{
+        const response = await api.get('/users');
+        console.log(response.data)
+        setPets(response.data);
+    }
+    getData();
+    },[pets]);
 
     return(
         <div>
-            pagina pets
+            {
+                pets.map((pet) => <li key={pet.id}>{pet.name}</li>)
+            }
         </div>
     )
 }

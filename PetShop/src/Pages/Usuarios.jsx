@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
-const Usuarios = () =>{
-    const [usuarios, setUsuarios] = useState('');
+const Clientes = () =>{
+    const [clientes, setClientes] = useState([]);
 
-    useEffect(async ()=>{
-        const response = await api.get('/usuarios');
-        setUsuarios(response);
-    },[]);
+    useEffect(()=>{
+        const getClientes = async ()=>{
+        const response = await api.get('/users');
+        setClientes(response.data);
+        }
+        getClientes();
+    },[clientes]);
 
     return(
         <div>
-            pagina usuarios
+            <ul>
+                {
+                    clientes.map((cliente, index) =>(
+                        <li key={index}>{cliente.name}</li>
+                    ))
+                }
+            </ul>
         </div>
-    )
-}
+    );
+};
 
-export default Usuarios;
+export default Clientes;
