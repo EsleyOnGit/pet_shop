@@ -1,35 +1,56 @@
-const EditarPet = () =>{
+import { useState } from "react"
+import api from "../api/api";
+
+const CadastrarPet = () =>{
+    const [name, setName] = useState('');
+    const [raca, setRaca] = useState('');
+    const [especie, setEspecie] = useState('');
+    const [tamanho, setTamanho] = useState('');
+    const [peso, setPeso] = useState('');
+
+    function handleSubmit(e){
+        e.presentDefault()
+        values = {
+            name, 
+            raca,
+            especie,
+            tamanho,
+            peso
+        }
+        api.put("/pet/cadastro", values);
+    }
+
     <div>
-            <form action="submit">
-                <div className="form-example">
-                    <label for="name">Nome: </label>
-                    <input type="text" name="name" id="name" required />
-                </div>
-                <div className="form-example">
-                    <label for="telefone">Raça: </label>
-                    <input type="tel" name="telefone" id="telefone" required />
-                </div>
-                <div className="form-example">
-                    <label for="email">Espécie: </label>
-                    <input type="text" name="email" id="email" required />
-                </div>
-                <div className="form-example">
-                    <label for="password">Tamanho: </label>
-                    <input type="password" name="password" id="password" required />
-                </div>
-                <div className="form-example">
-                    <label for="ablepasswd">Peso: </label>
-                    <input type="password" name="ablepasswd" id="ablepasswd" required />
-                </div>
-                <div className="form-example">
-                    <label for="email">Animal? </label>
-                    <input type="email" name="email" id="email" required />
-                </div>
-                <div className="form-example">
-                    <input type="submit" value="Subscribe!" />
-                </div>
-            </form>
-        </div>
+        <form action="submit">
+            <div className="form-example">
+                <label for="name">Nome: </label>
+                <input type="text" name="name" id="name" required onChange={(t) => setName(t.target.value)}/>
+            </div>
+            <div className="form-example">
+                <label for="raca">Raça: </label>
+                <input type="tel" name="raca" id="raca" required  onChange={(t) => setRaca(t.target.value)}/>
+            </div>
+            <div className="form-example">
+                <label for="especie">Espécie: </label>
+                <input type="text" name="especie" id="especie" required onChange={(t) => setEspecie(t.target.value)}/>
+            </div>
+            <div className="form-example">
+                <label for="tamanho">Tamanho: </label>
+                <input type="tamanho" name="tamanho" id="tamanho" required onChange={(t) => setTamanho(t.target.value)}/>
+            </div>
+            <div className="form-example">
+                <label for="peso">Peso: </label>
+                <input type="txt" name="peso" id="peso" required onChange={(t) => setPeso(t.target.value)}/>
+            </div>
+            <div className="form-example">
+                <label for="animal">Animal? </label>
+                <input type="animal" name="animal" id="animal" required />
+            </div>
+            <div className="form-example">
+                <input type="submit" value="Subscribe!" onClick={handleSubmit}/>
+            </div>
+        </form>
+    </div>
 };
 
-export default EditarPet;
+export default CadastrarPet;

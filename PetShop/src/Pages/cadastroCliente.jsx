@@ -3,8 +3,8 @@ import EditarCliente from "../components/editarCliente"
 const CadastroCliente = () =>{
     return(
         <div>
-            <EditarCliente />
+            <EditarCliente button="cadastrar"/>
         </div>
     )
 };
-export default EditarCliente;
+export default CadastroCliente;
