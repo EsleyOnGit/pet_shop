@@ -6,7 +6,7 @@ const Clientes = () =>{
 
     useEffect(()=>{
         const getClientes = async ()=>{
-        const response = await api.get('/users');
+        const response = await api.get('/usuarios');
         setClientes(response.data);
         }
         getClientes();
@@ -17,7 +17,7 @@ const Clientes = () =>{
             <ul>
                 {
                     clientes.map((cliente, index) =>(
-                        <li key={index}>{cliente.name}</li>
+                        <li key={index}>{cliente.nome}</li>
                     ))
                 }
             </ul>

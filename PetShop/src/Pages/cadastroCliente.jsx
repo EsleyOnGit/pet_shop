@@ -1,9 +1,9 @@
-import EditarCliente from "../components/editarCliente"
+import Cadastro from "../components/cadastroClient";
 
 const CadastroCliente = () =>{
     return(
         <div>
-            <EditarCliente button="cadastrar"/>
+            <Cadastro button="cadastrar"/>
         </div>
     )
 };

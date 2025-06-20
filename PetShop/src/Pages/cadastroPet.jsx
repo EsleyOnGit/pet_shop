@@ -1,9 +1,9 @@
-import EditarPet from "../components/editarPet"
+import CadastrarPet from "../components/cadastrarPet";
 
 const CadastroPet = ()=>{
     return(
         <div>
-            <EditarPet />
+          <CadastrarPet  button="cadastrar"/>
         </div>
     );
 };

@@ -6,17 +6,17 @@ const Pets = () =>{
 
     useEffect(()=> {
         const getData = async ()=>{
-        const response = await api.get('/users');
+        const response = await api.get('/pets');
         console.log(response.data)
         setPets(response.data);
     }
     getData();
-    },[pets]);
+    },[]);
 
     return(
         <div>
             {
-                pets.map((pet) => <li key={pet.id}>{pet.name}</li>)
+                pets.map((pet) => <li key={pet.id}>{pet.nome}</li>)
             }
         </div>
     )

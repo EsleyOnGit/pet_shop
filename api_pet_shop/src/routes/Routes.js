@@ -7,15 +7,16 @@ const router = express.Router();
 
 /** Rotas dos usuários**/
 
-router.get("usuarios", userController.Listar);
-/*router.post("usuario/cadastro", userController.Cadastrar);
-router.put("usuarios/:id", userController.Atualizar);
-router.delete("deletar/usuario/:id", userController.Deletar);
-*/
+router.get("/usuarios", userController.Listar);
+router.get("/usuario/:id", userController.getOne);
+router.post("/usuario/cadastro", userController.Cadastrar);
+router.put("/usuario/:id", userController.Atualizar);
+router.delete("/deletar/usuario/:id", userController.Deletar);
+
 /** Rotas dos Pets**/
-router.get("pets", petsController.Listar);
-router.post("pets/cadastro/", petsController.Cadastrar);
-router.put("pet/:id", petsController.Atualizar);
-router.delete("deletar/pet/:id", petsController.Deletar);
+router.get("/pets", petsController.Listar);
+router.post("/pet/cadastro/", petsController.Cadastrar);
+router.get("/pet/:id", petsController.getOne);
+router.delete("/deletar/pet/:id", petsController.Deletar);
 
 export default router;

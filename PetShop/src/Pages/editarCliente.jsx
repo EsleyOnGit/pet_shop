@@ -1,4 +1,4 @@
-import Cadastro from "../components/cadastro";
+import Cadastro from "../components/cadastroClient";
 
 const EditarCliente = () =>{
     return(
