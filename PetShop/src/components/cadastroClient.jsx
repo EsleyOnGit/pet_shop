@@ -1,17 +1,9 @@
 import { useState } from "react";
 import api from "../api/api";
 import CadastrarPet from "./cadastrarPet";
-/**
- "nome": "Esley", 
-  "email": "esley1@email.com", 
-  "telefone": "7534342510",
-  "rua": "minha casa",
-  "numero": 123, 
-  "cep": "470000000",
-  "uf": "BR"
- */
+
 const Cadastro = (props) =>{
-    const [id, setId] = useState(0)
+    const [ID, setId] = useState(0)
     const [nome,setNome] = useState('');
     const [telefone,setTelefone] = useState('');
     const [email,setEmail] = useState('');
@@ -25,7 +17,7 @@ const Cadastro = (props) =>{
         event.preventDefault();
         setId(Date.now())
         if(props.button === "cadastrar"){
-            const values = { id, nome, email, telefone, rua, numero, cep, uf };
+            const values = { ID, nome, email, telefone, rua, numero, cep, uf };
             api.post("/usuario/cadastro", values);
             
         }else{
@@ -71,9 +63,12 @@ const Cadastro = (props) =>{
                     props.button === "editar" && 
                     <CadastrarPet />
                 }
+                { !props.button ==="editar" &&
                 <div className="form-example">
                     <input type="submit" value={props.button} />
-                </div>
+                </div>  
+                }
+
             </form>
         </div>
     );

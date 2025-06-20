@@ -1,4 +1,5 @@
 import Cadastro from "../components/cadastroClient";
+import "./home.module.styles.css";
 
 const CadastroCliente = () =>{
     return(

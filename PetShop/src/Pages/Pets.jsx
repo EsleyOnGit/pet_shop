@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
+import "./user.module.style.css";
 const Pets = () =>{
     const [pets, setPets] = useState([]);
 
@@ -14,10 +15,21 @@ const Pets = () =>{
     },[]);
 
     return(
-        <div>
-            {
-                pets.map((pet) => <li key={pet.id}>{pet.nome}</li>)
-            }
+        <div className="form-exemple">
+            <h2>Lista de pets</h2>
+            <div className="container-user">
+                <ul className="lista">
+                    {
+                        pets.map((pet, index) => <li key={pet.id} className={index %2 === 0?"user-list par" : "user-list"}>{pet.nome}
+                            <div className="container-button">
+                                <button className="button-li atualizar">Atualizar</button>
+                                <button className="button-li excluir">Excluir</button>
+                            </div>
+                        </li>)
+                    }
+                </ul>
+            </div>
+            
         </div>
     )
 }

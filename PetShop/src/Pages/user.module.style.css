@@ -1,0 +1,59 @@
+.form-example {
+    width: auto;
+    height: auto;
+    background-color: #e9e4d6e5;
+}
+
+.container-user{
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.button-li{
+    display: flex;
+    background-color: #33333359;
+    max-width: 60px;
+    max-height: 50px;
+    font-size: small;
+    justify-content: center;
+    align-items: center;
+}
+
+.atualizar{
+ background-color: #fa9819;
+}
+.par{
+    background-color: #fad946c4;
+}
+
+.excluir{
+    background-color: #fc2a0f;
+}
+
+.lista{
+    display: flex;
+    color: #8B6914;
+    flex-direction: column;
+}
+
+.user-list{
+    display: flex;
+    width: 80vw;
+    color: #8B4513;
+    padding: 10px;
+    margin: 10px;
+    border: solid 1px #8B4513;
+    text-decoration: none;
+    justify-content: space-between;
+}
+
+.container-button{
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+    gap: 5px;
+}
+
