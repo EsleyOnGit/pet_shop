@@ -8,6 +8,7 @@ import EditarCliente from "./Pages/editarCliente";
 import CadastroCliente from "./Pages/cadastroCliente"
 import AtualizarPet from "./Pages/atualizarPet";
 import CadastroPet from "./Pages/cadastroPet";
+import NotFound from "./Pages/paginaErro";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
               <Route component = { CadastroCliente } element={<CadastroCliente />} path="/cadastro/usuario" />
               <Route component = { CadastroPet } element={<CadastroPet />} path="/cadastro/pet" />
               <Route component = { AtualizarPet } element={<AtualizarPet />} path="/atualizar/pet/:id" />
+              <Route path="/*" element={<NotFound />} />
           </Routes>
       </BrowserRouter>
   )
