@@ -25,7 +25,7 @@ const Home = () =>{
                     <div className="hero-content">
                         <div className="hero-text">
                             <div className="club-info">
-                                <h2>Petshop</h2>
+                                <h2>Petshop da UNEB</h2>
                                 <p>Faça parte do <span className="highlight">"PetShop da uneb"</span> e fique por dentro de todas <span className="highlight">novidades</span> e <span className="highlight">descontos</span> imperdíveis!</p>
                             </div>
                             <h1>Porque seu pet é único</h1>

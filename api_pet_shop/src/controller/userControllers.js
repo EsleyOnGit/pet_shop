@@ -12,7 +12,7 @@ async function Listar(req, res){
 
 const getOne = async(req, res)=>{
     try {
-        const id = req.params.id;
+        const id  = req.params.id;
         const consulta = await userServices.getOne(id)
         res.status(200).json(consulta);
     } catch (error) {
@@ -31,14 +31,16 @@ async function Cadastrar(req, res){
     }
 };
 
-async function Atualizar(req, res){
+async function Atualizar(req, res) {
     try {
         const id = req.params.id;
-        const usuarios = await userServices.Listar(id);
-        res.status(200).json(usuarios);
+        const dados = req.body;
+        const resultado = await userServices.Atualizar(id, dados);
+
+        res.status(200).json({ message: "Usuário atualizado com sucesso", resultado });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Erro no banco de dados tente novamente mais tarde." + error})
+        res.status(500).json({ message: "Erro ao atualizar usuário: " + error });
     }
 }
 

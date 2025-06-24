@@ -37,6 +37,11 @@ const getOne = async(id) =>{
 }
 
 const Cadastrar = async (dados) => {
+    let b = Date.now();
+        b = b.toString();
+        let id = b.slice(9,13);
+        id = Number(id[1])
+        
     const values = [
         id,
         dados.nome,
@@ -51,7 +56,7 @@ const Cadastrar = async (dados) => {
 
     return new Promise((resolve, reject) => {
 
-        const sql = `INSERT INTO cliente(id, nome, email, telefone, rua, numero, cep, estado) VALUES (?)`;
+        const sql = `INSERT INTO cliente(ID, nome, email, telefone, rua, numero, cep, estado) VALUES (?)`;
         db.query(sql, [values], (err, data) => {
             if (err) reject(err);
             else resolve(data);
@@ -59,15 +64,38 @@ const Cadastrar = async (dados) => {
     });
 }
 
-const Atualizar = async (values) => {
+const Atualizar = async (id, values) => {
     return new Promise((resolve, reject) => {
-        const sql = `INSERT INTO funcionario(...) VALUES (?)`;
-        db.query(sql, [values], (err, data) => {
+        const sql = `
+            UPDATE cliente SET 
+                nome = ?, 
+                email = ?, 
+                telefone = ?, 
+                rua = ?, 
+                numero = ?, 
+                cep = ?, 
+                estado = ?
+            WHERE id = ?
+        `;
+
+        const params = [
+            values.nome,
+            values.email,
+            values.telefone,
+            values.rua,
+            values.numero,
+            values.cep,
+            values.uf,
+            id
+        ];
+
+        db.query(sql, params, (err, data) => {
             if (err) reject(err);
             else resolve(data);
         });
     });
-}
+};
+
 
 const Deletar = async (id) => {
     try {

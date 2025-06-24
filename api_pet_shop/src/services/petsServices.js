@@ -15,9 +15,9 @@ const Cadastrar = async(values) =>{
     return addPet;
 };
 
-const Atualizar = async (values) => {
+const Atualizar = async (values, id) => {
     try {
-        const resultado = await petsRepository.Atualizar(values);
+        const resultado = await petsRepository.Atualizar(values, id);
         return resultado;
     } catch (error) {
         console.error("Erro no service:", error);

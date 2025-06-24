@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import api from "../api/api";
+import { useParams } from "react-router-dom";
 
 /**
   `ID` int NOT NULL,
@@ -18,26 +19,22 @@ CREATE TABLE `tipo_animal` (
   `especie` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
  */
 const CadastrarPet = (props) =>{
-    const [id, setId] = useState('');
+    let { id } = useParams();
     const [nome, setNome] = useState('');
     const [raca, setRaca] = useState('');
     const [especie, setEspecie] = useState('');
-    const [tamanho, setTamanho] = useState('');
-    const [peso, setPeso] = useState('');
     const [idade, setIdade] = useState(0);
     const [id_cliente, setId_cliente] = useState(0);
     const [id_tipo_animal, setId_tipo_animal] = useState(0)
+    let [dados, setDados] = useState([])
 
     const handleSubmit = async (e) => {
     e.preventDefault();
-    setId(Date.now())
+    
     const values = {
-        id,
         nome,
         raca,
         especie,
-        tamanho,
-        peso,
         idade,
         id_cliente,
         id_tipo_animal
@@ -45,51 +42,62 @@ const CadastrarPet = (props) =>{
     try {
         if (props.button === "cadastrar") {
             await api.post("/pet/cadastro", values);
+            console.log("pet cadastrado com sucesso!");
         } else {
-            await api.put("/pet/cadastro", values);
+            await api.put("/pet/"+id, values);
+            console.log("pet atualizado com sucesso!");
         }
-        alert("Dados enviados com sucesso!");
     } catch (error) {
         console.error("Erro ao enviar dados:", error);
-        alert("Erro ao enviar dados.");
     }
 };
+
+    async function getValues() {
+        const data = await api.get('/pet/'+ id);
+        console.log(data.data)
+        setDados(data.data)
+        return data
+    }
+
+    useEffect(()=>{
+        getValues();
+    },[])
 
     return <div className="form-container">
         <h2>{props.button === "cadastrar" ? "Cadastrar Pet" : "Atualizar Pet"}</h2>
         <form onSubmit={handleSubmit}>
             <div className="form-example">
                 <label htmlFor="name">Nome:</label>
-                <input type="text" name="name" id="name" required onChange={(t) => setNome(t.target.value)}/>
+                <input type="text" name="name" id="name" required placeholder={dados.nome}
+                onChange={(t) => setNome(t.target.value)}/>
             </div>
             <div className="form-example">
                 <label htmlFor="raca">Raça: </label>
-                <input type="tel" name="raca" id="raca" required  onChange={(t) => setRaca(t.target.value)}/>
+                <input type="tel" name="raca" id="raca" required  placeholder={dados.raca}
+                onChange={(t) => setRaca(t.target.value)}/>
             </div>
             <div className="form-example">
                 <label htmlFor="especie">Espécie: </label>
-                <input type="text" name="especie" id="especie" required onChange={(t) => setEspecie(t.target.value)}/>
+                <input type="text" name="especie" id="especie" required placeholder={dados.descricao}
+                onChange={(t) => setEspecie(t.target.value)}/>
             </div>
-            <div className="form-example">
-                <label htmlFor="tamanho">Tamanho: </label>
-                <input type="tamanho" name="tamanho" id="tamanho" required onChange={(t) => setTamanho(Number(t.target.value))}/>
-            </div>
-            <div className="form-example">
-                <label htmlFor="peso">Peso: </label>
-                <input type="number" name="peso" id="peso" required onChange={(t) => setPeso(Number(t.target.value))}/>
-            </div>
+            
             <div className="form-example">
                 <label htmlFor="idade">idade:</label>
-                <input type="number" name="idade" id="idade" required onChange={(t) => setIdade(Number(t.target.value))}/>
+                <input type="number" name="idade" id="idade" required placeholder={dados.idade}
+                onChange={(t) => setIdade(Number(t.target.value))}/>
             </div>
             <div className="form-example">
                 <label htmlFor="dono_id">id do dono:</label>
-                <input type="number" name="dono_id" id="dono_id" required onChange={(t) => setId_cliente(Number(t.target.value))}/>
+                <input type="number" name="dono_id" id="dono_id" required placeholder={dados.id_cliente}
+                onChange={(t) => setId_cliente(Number(t.target.value))}/>
             </div>
             <div className="form-example">
-                <label htmlFor="tipo_animal_id">id do animal:</label>
-                <input type="number" name="tipo_animal_id" id="tipo_animal_id" required onChange={(t) => setId_tipo_animal(Number(t.target.value))}/>
+                <label htmlFor="tipo_animal_id">id tipo Animal:</label>
+                <input type="number" name="tipo_animal_id" id="tipo_animal_id" required placeholder={dados.id_cliente}
+                onChange={(t) => setId_tipo_animal(Number(t.target.value))}/>
             </div>
+
             <div className="form-example">
                 <button type="submit">{props.button}</button>
             </div>

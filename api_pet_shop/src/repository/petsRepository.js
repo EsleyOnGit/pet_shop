@@ -13,21 +13,42 @@ const Listar = () =>{
     });
 };
 
-const getOne = (id) =>{
-    return new Promise((resolve, reject)=>{
-        const sql = `SELECT * from animal WHERE ID = ${id}`;
+const getOne = (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT 
+                animal.id,
+                animal.nome,
+                animal.idade,
+                tipo_animal.especie,
+                tipo_animal.descricao,
+                tipo_animal.raca,
+                cliente.nome AS nome_cliente,
+                cliente.id AS id_cliente
+            FROM animal
+            JOIN cliente ON cliente.id = animal.id_cliente
+            JOIN tipo_animal ON tipo_animal.id = animal.id_tipo_animal
+            WHERE animal.id = ?
+        `;
+        db.query(sql, [id], (err, res) => {
+            if (err) {
+                console.log("ops! deu erro " + err);
+                return reject(err);
+            }
 
-        db.query(sql, (err, res)=>{
-            if(err)
-                reject(console.log("ops! deu erro " + err))
-            return resolve(!res[0]? "Pet não encontrado!": res[0])
-        })
-    })
+            return resolve(res.length === 0 ? "Pet não encontrado!" : res[0]);
+        });
+    });
 };
+
 
 const Cadastrar = async (values) => {
    
     return new Promise((resolve, reject) => {
+        let b = Date.now();
+        b = b.toString();
+        let id = b.slice(9,13);
+        id = Number(id[1])
         const tipoAnimal = [
             id,
             values.descricao,
@@ -69,56 +90,46 @@ const Cadastrar = async (values) => {
 };
 
 
-const Atualizar = async (values) => {
+const Atualizar = async (values, id) => {
+
     return new Promise((resolve, reject) => {
-        // 1. Atualizar cliente
-        const sql1 = `UPDATE cliente SET nome = ?, email = ?, telefone = ?, rua = ?, numero = ?, cep = ?, uf = ? WHERE id = ?`;
-        const clienteValues = [
-            values.cliente.nome,
-            values.cliente.email,
-            values.cliente.telefone,
-            values.cliente.rua,
-            values.cliente.numero,
-            values.cliente.cep,
-            values.cliente.uf,
-            values.cliente.id
+        // Atualiza tipo_animal
+        const sql1 = `
+            UPDATE tipo_animal 
+            SET raca = ?, nome = ?, especie = ? 
+            WHERE ID = ?
+        `;
+        const tipoAnimalValues = [
+            values.raca,
+            values.nome,
+            values.especie,
+            id // id do tipo_animal
         ];
 
-        db.query(sql1, clienteValues, (err1, res1) => {
-            if (err1) return reject("Erro ao atualizar cliente: " + err1);
+        db.query(sql1, tipoAnimalValues, (err1, res1) => {
+            if (err1) return reject("Erro ao atualizar tipo_animal: " + err1);
 
-            // 2. Atualizar tipo_animal
-            const sql2 = `UPDATE tipo_animal SET descricao = ?, raca = ?, nome = ?, especie = ? WHERE ID = ?`;
-            const tipoAnimalValues = [
-                values.tipo_animal.descricao,
-                values.tipo_animal.raca,
-                values.tipo_animal.nome,
-                values.tipo_animal.especie,
-                values.tipo_animal.id
+            // Atualiza animal
+            const sql2 = `
+                UPDATE animal 
+                SET nome = ?, idade = ?, id_cliente = ?, id_tipo_animal = ? 
+                WHERE ID = ?
+            `;
+            const animalValues = [
+                values.nome,
+                values.idade,
+                values.id_cliente,
+                values.id_tipo_animal,
+                id // id do animal a ser atualizado
             ];
 
-            db.query(sql2, tipoAnimalValues, (err2, res2) => {
-                if (err2) return reject("Erro ao atualizar tipo_animal: " + err2);
+            db.query(sql2, animalValues, (err2, res2) => {
+                if (err2) return reject("Erro ao atualizar animal: " + err2);
 
-                // 3. Atualizar animal
-                const sql3 = `UPDATE animal SET nome = ?, idade = ?, id_cliente = ?, id_tipo_animal = ? WHERE ID = ?`;
-                const animalValues = [
-                    values.animal.nome,
-                    values.animal.idade,
-                    values.animal.id_cliente,
-                    values.animal.id_tipo_animal,
-                    values.animal.id
-                ];
-
-                db.query(sql3, animalValues, (err3, res3) => {
-                    if (err3) return reject("Erro ao atualizar animal: " + err3);
-
-                    // Todos atualizados com sucesso
-                    resolve({
-                        cliente: res1,
-                        tipo_animal: res2,
-                        animal: res3
-                    });
+                // Tudo certo
+                resolve({
+                    tipo_animal: res1,
+                    animal: res2
                 });
             });
         });
@@ -126,17 +137,36 @@ const Atualizar = async (values) => {
 };
 
 
-const Deletar = (id) =>{
-    return new Promise((resolve, reject)=>{
-        const sql = 'DELETE * FROM animal WHERE animal_id = ?';
-        db.query(sql, [id], (err, data)=>{
-            if(err){
-                console.log("Erro ao buscar dados: "+ err);
-                return reject(err);
+
+const Deletar = (id) => {
+    return new Promise((resolve, reject) => {
+        // Primeiro: buscar o nome do animal
+        const buscar = "SELECT nome FROM animal WHERE ID = ?";
+        db.query(buscar, [id], (erro, resultadoConsulta) => {
+            if (erro) {
+                console.error("Erro ao consultar:", erro);
+                return reject(erro);
             }
-            resolve(data);
+
+            if (resultadoConsulta.length === 0) {
+                return reject({ status: 404, message: "Animal não encontrado" });
+            }
+
+            const nome = resultadoConsulta[0].nome;
+
+            // Agora deletar
+            const deletar = "DELETE FROM animal WHERE ID = ?";
+            db.query(deletar, [id], (erroDelete, resultadoDelete) => {
+                if (erroDelete) {
+                    console.error("Erro ao deletar:", erroDelete);
+                    return reject(erroDelete);
+                }
+
+                return nome;
+            });
         });
     });
 };
+
 
 export default { Listar, getOne, Atualizar, Cadastrar, Deletar };

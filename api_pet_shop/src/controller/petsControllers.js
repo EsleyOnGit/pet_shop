@@ -30,7 +30,8 @@ const Cadastrar = async(req, res) =>{
 
 const Atualizar = async (req, res) => {
     try {
-        const resultado = await petsService.Atualizar(req.body);
+        const id = req.params.id
+        const resultado = await petsServices.Atualizar(req.body,id);
         return res.status(200).json({
             message: "Atualização realizada com sucesso!",
             resultado
@@ -44,13 +45,16 @@ const Atualizar = async (req, res) => {
     }
 };
 
-const Deletar = async(req, res) =>{
+const Deletar = async (req, res) => {
+    const id = req.params.id;
     try {
-        const id = req.params.id;
-        const todosPets = await petsServices.Deletar(id);
-        return res.status(200).json(todosPets);
-    } catch (error) {
-        return res.status(500).json({message: "Tivemos um erro ao acessar tente mais tarde!"})
+        const resultado = await petsServices.Deletar(id);
+        return res.status(200).json({
+            mensagem: `Animal '${resultado.nome}' (ID: ${resultado.id}) deletado com sucesso.`,
+        });
+    } catch (erro) {
+        const status = erro.status || 500;
+        return res.status(status).json({ erro: erro.message || "Erro ao deletar animal" });
     }
 };
 

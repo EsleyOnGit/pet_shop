@@ -15,8 +15,9 @@ router.delete("/deletar/usuario/:id", userController.Deletar);
 
 /** Rotas dos Pets**/
 router.get("/pets", petsController.Listar);
-router.post("/pet/cadastro/", petsController.Cadastrar);
 router.get("/pet/:id", petsController.getOne);
+router.post("/pet/cadastro/", petsController.Cadastrar);
+router.put("/pet/:id", petsController.Atualizar);
 router.delete("/deletar/pet/:id", petsController.Deletar);
 
 export default router;

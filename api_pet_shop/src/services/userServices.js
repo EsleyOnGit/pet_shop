@@ -15,10 +15,10 @@ const Cadastrar = async (values) =>{
     return cadastro;
 }
 
-const Atualizar = async (id) =>{
-    const usuarios = await userRepository.Atualizar(id);
-    return usuarios;
-}
+const Atualizar = async (id, values) => {
+    return await userRepository.Atualizar(id, values);
+};
+
 
 const Deletar = async (id) =>{
     const usuario = await userRepository.Deletar(id);
